@@ -7,8 +7,14 @@ import HudDrawer from '../components/HudDrawer';
 export default class GlobalMap extends React.Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = {}
+  componentDidUpdate() {
+    console.log('Component GlobalMap updated:', this.props.loaded);
+  }
+
+  componentDidMount() {
+    console.log('Component GlobalMap mounted.');
   }
 
   render() {
@@ -17,7 +23,7 @@ export default class GlobalMap extends React.Component {
         id="global-map-container"
         maxWidth={false}>
         <Container id="hud" maxWidth="sm">
-          <HudDrawer />
+          <HudDrawer loaded={this.props.loaded}/>
         </Container>
 
         <LoadScript
