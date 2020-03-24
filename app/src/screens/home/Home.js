@@ -10,7 +10,8 @@ export default class HomeScreen extends React.Component {
       loaded: false,
       announcements: [],
       hotspots: [],
-      layers: []
+      layers: [],
+      statistics: []
     };
   }
 
@@ -23,14 +24,21 @@ export default class HomeScreen extends React.Component {
     const hotspotsResponse = await fetch('https://api.groundtruth.app/hotspots', {});
     const hotspotsJson = await hotspotsResponse.json();
 
-    console.log('Hotspots JSON', hotspotsJson);
+    const statisticsResponse = await fetch('https://api.groundtruth.app/statistics', {});
+    const statisticsJson = await statisticsResponse.json();
 
+    const layersResponse = await fetch('https://api.groundtruth.app/layers', {});
+    const layersJson = await layersResponse.json();
+
+    console.log('Layers JSON', layersJson);
 
     setTimeout(() => {
       this.setState({
         loaded: true,
         announcements: announcementsJson.announcements,
-        hotspots: hotspotsJson.hotspots
+        hotspots: hotspotsJson.hotspots,
+        statistics: statisticsJson.statistics,
+        layers: layersJson.layers
       });
     }, 1000);
   }
@@ -40,7 +48,9 @@ export default class HomeScreen extends React.Component {
       <GlobalMap
         loaded={this.state.loaded}
         hotspots={this.state.hotspots}
-        announcements={this.state.announcements} />
+        announcements={this.state.announcements}
+        statistics={this.state.statistics}
+        layers={this.state.layers} />
     </div>
   }
 }

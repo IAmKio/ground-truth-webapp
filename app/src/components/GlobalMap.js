@@ -14,10 +14,12 @@ export default class GlobalMap extends React.Component {
       markers: [],
       GoogleLatLngFn: null,
       map: null,
+      currentLat: 51.3360,
+      currentLong: 0.2674
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(previousProps) {
     console.log('Component GlobalMap updated:', this.props.loaded);
     console.log(this.props);
 
@@ -28,21 +30,23 @@ export default class GlobalMap extends React.Component {
           lat: hotspot.geopoint._latitude,
           lng: hotspot.geopoint._longitude,
         }
-        const thisMarker = new this.state.GoogleLatLngFn(position.lat, position.lng);
+        const thisMarker = { location: new this.state.GoogleLatLngFn(position.lat, position.lng), weight: 5 };
         this.state.markers.push(thisMarker);
       });
     }
 
-    console.log(this.state.markers);
+    if (previousProps !== this.props) {
+      console.log('Drawing heat:', this.state.markers);
+      this.setState({});
+    }
   }
 
-  componentDidMount() {
+  componentDidMount(previousProps) {
     console.log('Component GlobalMap mounted.');
 
-    setInterval(() => {
-      console.log('Refreshing ...');
+    if (previousProps !== this.props) {
       this.setState({});
-    }, 20000)
+    }
   }
 
   onLoad() {
@@ -55,6 +59,8 @@ export default class GlobalMap extends React.Component {
 
   onDragEnd() {
     console.log('Drag end.');
+    this.state.currentLat = this.state.map.getCenter().lat();
+    this.state.currentLong = this.state.map.getCenter().lng();
   }
 
   render() {
@@ -63,7 +69,10 @@ export default class GlobalMap extends React.Component {
         id="global-map-container"
         maxWidth={false}>
         <Container id="hud" maxWidth="sm">
-          <HudDrawer loaded={this.props.loaded}/>
+          <HudDrawer
+            loaded={this.props.loaded}
+            statistics={this.props.statistics}
+            layers={this.props.layers} />
         </Container>
 
         <LoadScript
@@ -71,7 +80,7 @@ export default class GlobalMap extends React.Component {
           googleMapsApiKey="AIzaSyDW_dP3NjuXPjvBs0AXKOL2BuQ4susF3KU"
           libraries={this.googleMapLibraries}>
             <GoogleMap
-              onDragEnd={this.onDragEnd}
+              onDragEnd={this.onDragEnd.bind(this)}
               onLoad={map => {
                 this.setState({
                   isReady: true,
@@ -82,8 +91,8 @@ export default class GlobalMap extends React.Component {
               id='global-map'
               zoom={7}
               center={{
-                lat: 51.3360,
-                lng: 0.2674
+                lat: this.state.currentLat,
+                lng: this.state.currentLong
               }}>
 
             <HeatmapLayer

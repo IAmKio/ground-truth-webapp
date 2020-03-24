@@ -9,12 +9,17 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 
+import SubmitDialog from './SubmitDialog';
 
 export default class HudDrawer extends React.Component {
   constructor(props) {
     super(props);
 
     this.loaded = props.loaded;
+
+    this.state = {
+      showSubmitDialog: false
+    };
   }
 
   componentDidMount() {
@@ -23,11 +28,21 @@ export default class HudDrawer extends React.Component {
 
   componentDidUpdate() {
     console.log('Component HUD Drawer did update.');
+    console.log(this.props);
+  }
+
+  launchSubmitDialog(layer) {
+    console.log('layer', layer);
+    this.setState({
+      showSubmitDialog: true,
+      workingLayer: layer
+    });
   }
 
   render() {
     return (
       <React.Fragment>
+        <SubmitDialog layer={this.state.workingLayer} open={this.state.showSubmitDialog} />
         <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
@@ -56,21 +71,41 @@ export default class HudDrawer extends React.Component {
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container spacing={3}>
+            {
+              this.props.layers.map(layer => {
+              return <Grid item xs={12}>
+                <Typography gutterBottom><b>{layer.friendlyName} ({layer.technicalName})</b><br />{layer.shortDescription}</Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.launchSubmitDialog(layer)}
+                  endIcon={<Icon>send</Icon>}>
+                  Report
+                </Button>
+              </Grid>
+              })
+            }
+            </Grid>
+          </ExpansionPanelDetails>
         </ExpansionPanel>
 
         <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
+            id="panel2a-header">
             <Typography>Statistics</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
-            </Typography>
+            <Grid container spacing={3}>
+            {
+              this.props.statistics.map(statistic => {
+              return <Grid item xs={12}><Typography><b>{statistic.name}: {statistic.count}</b><br />{statistic.description}</Typography></Grid>
+              })
+            }
+            </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </React.Fragment>
