@@ -1,5 +1,12 @@
 {
   "hosting": [{
+    "headers": [{
+      "source": "**",
+      "headers": [{
+        "key": "Access-Control-Allow-Origin",
+        "value": "*"
+      }]
+    }],
     "target": "groundtruth",
     "public": "build",
     "ignore": [

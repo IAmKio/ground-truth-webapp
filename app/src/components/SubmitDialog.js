@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Icon from '@material-ui/core/Icon';
 
 export default class SubmitDialog extends React.Component {
   constructor(props) {
@@ -16,7 +17,9 @@ export default class SubmitDialog extends React.Component {
       open: false,
       workingLayer: {},
       locationFound: false,
-      allowSend: false
+      location: null,
+      allowSend: false,
+      showError: false,
     };
   }
 
@@ -42,17 +45,25 @@ export default class SubmitDialog extends React.Component {
     }
   }
 
-  geoSuccess() {
+  geoSuccess(position) {
     console.log('Geo success!');
+    console.log('Reporting with UID:', window.firebaseUser.uid);
 
     this.setState({
       locationFound: true,
-      allowSend: true
+      allowSend: true,
+      location: position,
     });
   }
 
   geoError() {
     console.log('Geo error!');
+
+    this.setState({
+      locationFound: false,
+      allowSend: false,
+      showError: true,
+    });
   }
 
   handleClose() {
@@ -62,15 +73,45 @@ export default class SubmitDialog extends React.Component {
     });
   }
 
+  async handleSend() {
+    console.log('Sending...');
+
+    const response = await fetch('https://api.groundtruth.app/ingest', {
+      method: 'POST',
+      mode: 'cors', // no-cors, *cors, same-origin
+      body: JSON.stringify({
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
+        anonymousUserId: window.firebaseUser.uid,
+        layerId: this.state.workingLayer.layerId,
+      })
+    });
+    const reportJson = await response.json();
+    console.log('Report Response:', reportJson);
+  }
+
   LocationUiBundle(props) {
     console.log('LocationUiBundle', props);
 
     if (props.locationFound) {
       return <React.Fragment>
       <DialogContentText id="alert-dialog-description">
-        We are ready!
+        <b>We are ready!</b>
       </DialogContentText>
       <LinearProgress variant="determinate" value={100}  />
+    </React.Fragment>
+    }
+
+    if (props.showError) {
+      return <React.Fragment>
+      <DialogContentText id="alert-dialog-description">
+        <b>Sorry, we had an issue trying to get your location.</b>
+      </DialogContentText>
+      <DialogContentText id="alert-dialog-description">
+        You or your device may have blocked Ground Truth from obtaining your location. Please check your 
+        settings to remove this restriction and try again.
+      </DialogContentText>
+      <LinearProgress variant="determinate" value={100} color="secondary" />
     </React.Fragment>
     }
 
@@ -95,11 +136,18 @@ export default class SubmitDialog extends React.Component {
         <DialogContentText id="alert-dialog-description">
           {this.state.workingLayer.shortDescription}
         </DialogContentText>
-        <this.LocationUiBundle locationFound={this.state.locationFound} />
+        <this.LocationUiBundle
+          locationFound={this.state.locationFound}
+          showError={this.state.showError}
+        />
       </DialogContent>
       <DialogActions>
-        <Button disabled={this.state.allowSend ? false : true} onClick={this.handleClose.bind(this)} color="primary">
-          Sent Report
+        <Button
+          disabled={this.state.allowSend ? false : true} 
+          onClick={this.handleSend.bind(this)}
+          color="primary"
+          endIcon={<Icon>send</Icon>}>
+          Send Report
         </Button>
       </DialogActions>
     </Dialog>
