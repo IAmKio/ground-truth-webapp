@@ -23,21 +23,25 @@ export default class GlobalMap extends React.Component {
     console.log('Component GlobalMap updated:', this.props.loaded);
     console.log(this.props);
 
+    const builtMakers = [];
+
     if (this.props.hotspots.length > 0 && this.state.isReady) {
-      this.state.markers = [];
       this.props.hotspots.forEach(hotspot => {
         const position = {
           lat: hotspot.geopoint._latitude,
           lng: hotspot.geopoint._longitude,
         }
         const thisMarker = { location: new this.state.GoogleLatLngFn(position.lat, position.lng), weight: 5 };
-        this.state.markers.push(thisMarker);
+        builtMakers.push(thisMarker);
       });
     }
 
     if (previousProps !== this.props) {
-      console.log('Drawing heat:', this.state.markers);
-      this.setState({});
+      console.log('Drawing heat:', builtMakers);
+
+      this.setState({
+        markers: builtMakers,
+      });
     }
   }
 
@@ -59,8 +63,8 @@ export default class GlobalMap extends React.Component {
 
   onDragEnd() {
     console.log('Drag end.');
-    this.state.currentLat = this.state.map.getCenter().lat();
-    this.state.currentLong = this.state.map.getCenter().lng();
+    // this.state.currentLat = this.state.map.getCenter().lat();
+    // this.state.currentLong = this.state.map.getCenter().lng();
   }
 
   render() {
