@@ -16,6 +16,7 @@ export default class SubmitDialog extends React.Component {
       open: false,
       workingLayer: {},
       locationFound: false,
+      allowSend: false
     };
   }
 
@@ -32,8 +33,26 @@ export default class SubmitDialog extends React.Component {
       this.setState({
         workingLayer: this.props.layer || {},
         open: this.props.open
-      })
+      });
     }
+
+    if (this.state.open) {
+      console.log('Attempting to find geolocation...');
+      navigator.geolocation.getCurrentPosition(this.geoSuccess.bind(this), this.geoError.bind(this));
+    }
+  }
+
+  geoSuccess() {
+    console.log('Geo success!');
+
+    this.setState({
+      locationFound: true,
+      allowSend: true
+    });
+  }
+
+  geoError() {
+    console.log('Geo error!');
   }
 
   handleClose() {
@@ -41,6 +60,26 @@ export default class SubmitDialog extends React.Component {
     this.setState({
       open: false,
     });
+  }
+
+  LocationUiBundle(props) {
+    console.log('LocationUiBundle', props);
+
+    if (props.locationFound) {
+      return <React.Fragment>
+      <DialogContentText id="alert-dialog-description">
+        We are ready!
+      </DialogContentText>
+      <LinearProgress variant="determinate" value={100}  />
+    </React.Fragment>
+    }
+
+    return <React.Fragment>
+      <DialogContentText id="alert-dialog-description">
+        We're just working on getting your location...
+      </DialogContentText>
+      <LinearProgress />
+    </React.Fragment>;
   }
 
   render() {
@@ -56,14 +95,10 @@ export default class SubmitDialog extends React.Component {
         <DialogContentText id="alert-dialog-description">
           {this.state.workingLayer.shortDescription}
         </DialogContentText>
-
-        <DialogContentText id="alert-dialog-description">
-          We're just working on getting your location...
-        </DialogContentText>
-        <LinearProgress />
+        <this.LocationUiBundle locationFound={this.state.locationFound} />
       </DialogContent>
       <DialogActions>
-        <Button disabled={true} onClick={this.handleClose.bind(this)} color="primary">
+        <Button disabled={this.state.allowSend ? false : true} onClick={this.handleClose.bind(this)} color="primary">
           Sent Report
         </Button>
       </DialogActions>
