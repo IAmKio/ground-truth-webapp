@@ -76,18 +76,30 @@ export default class SubmitDialog extends React.Component {
   async handleSend() {
     console.log('Sending...');
 
+    this.setState({
+      allowSend: false,
+    });
+
     const response = await fetch('https://api.groundtruth.app/ingest', {
       method: 'POST',
       mode: 'cors', // no-cors, *cors, same-origin
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        latitude: this.state.location.coords.latitude,
-        longitude: this.state.location.coords.longitude,
+        latitude: this.state.location.coords.latitude.toString(), 
+        longitude: this.state.location.coords.longitude.toString(),
         anonymousUserId: window.firebaseUser.uid,
         layerId: this.state.workingLayer.layerId,
       })
     });
     const reportJson = await response.json();
     console.log('Report Response:', reportJson);
+
+    this.setState({
+      open: false,
+    });
   }
 
   LocationUiBundle(props) {
