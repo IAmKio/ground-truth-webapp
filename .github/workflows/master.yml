@@ -23,8 +23,8 @@ jobs:
     - name: Deploy to Firebase
       run: |
         npm install -g firebase-tools
-        firebase use wearequarantined
-        cd app && npm i && npm run build
+        cd app && firebase use wearequarantined
+        npm i && npm run build
         firebase deploy --only hosting:groundtruth --token "$FIREBASE_TOKEN" --force
       env:
         CI: true
