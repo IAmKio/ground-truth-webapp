@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "wearequarantined": {
+      "hosting": {
+        "groundtruth": [
+          "groundtruth"
+        ]
+      }
+    }
+  }
+}
