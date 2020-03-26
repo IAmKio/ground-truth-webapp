@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
+import { DialogContentText } from '@material-ui/core';
 
 export default function AboutDialogContent() {
   return (
@@ -18,7 +18,7 @@ export default function AboutDialogContent() {
       <DialogContentText
         id="scroll-dialog-description"
         tabIndex={1}>
-          All our data is free and public. It's available for anyone to use, any time. You can view links to the data <a href="https://github.com/IAmKio/ground-truth-api#where-can-i-get-the-data" target="_blank">here</a>.
+          All our data is free and public. It's available for anyone to use, any time. You can view links to the data <a href="https://github.com/IAmKio/ground-truth-api#where-can-i-get-the-data" rel="noopener noreferrer" target="_blank">here</a>.
       </DialogContentText>
     </React.Fragment>
   );

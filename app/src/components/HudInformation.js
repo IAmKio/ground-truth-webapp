@@ -8,7 +8,7 @@ import DataUsageIcon from '@material-ui/icons/DataUsage';
 import CodeIcon from '@material-ui/icons/Code';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 import AboutDialogContent from './AboutDialogContent';
 
@@ -77,7 +77,7 @@ export default function HudInformation() {
           <Paper className={classes.paper}>
             <FavoriteIcon />
             <Typography variant="subtitle1" component="p">
-              <a href="#" onClick={handleOpen}>About</a>
+              <a href="#about" onClick={handleOpen}>About</a>
             </Typography>
             <Hidden xsDown>
               <Typography variant="subtitle2" component="p">
