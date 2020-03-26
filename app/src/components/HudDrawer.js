@@ -10,6 +10,7 @@ import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 
 import SubmitDialog from './SubmitDialog';
+import HudInformation from './HudInformation';
 
 export default class HudDrawer extends React.Component {
   constructor(props) {
@@ -48,16 +49,23 @@ export default class HudDrawer extends React.Component {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header">
-            <Typography>Ground Truth Network {this.props.loaded ? '- Connected' : ''}</Typography>
+            <Grid container direction="row" alignItems="center">
+              <Grid item>
+                <Icon>{this.props.loaded ? 'check' : 'report_problem'}</Icon>
+              </Grid>
+              <Grid item>
+                 <Typography>
+                    &nbsp;&nbsp;{this.props.loaded ? 'Ground Truth - Online' : 'Connecting...'}
+                 </Typography>
+              </Grid>
+            </Grid>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              Ground Truth gives everyone the opportunity to report their symptoms anonymously for the benefit of others.
-            </Typography>
+            <HudInformation />
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        <ExpansionPanel>
+        <ExpansionPanel disabled={this.props.loaded ? false : true}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
@@ -67,7 +75,7 @@ export default class HudDrawer extends React.Component {
                 <Icon>my_location</Icon>
               </Grid>
               <Grid item>
-                 <b>&nbsp;&nbsp;REPORT NOW</b>
+                <b>&nbsp;&nbsp;REPORT NOW</b>
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
@@ -91,12 +99,21 @@ export default class HudDrawer extends React.Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        <ExpansionPanel>
+        <ExpansionPanel disabled={this.props.loaded ? false : true}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2a-content"
             id="panel2a-header">
-            <Typography>Statistics</Typography>
+              <Grid container direction="row" alignItems="center">
+                <Grid item>
+                  <Icon>equalizer</Icon>
+                </Grid>
+                <Grid item>
+                    <Typography>
+                      &nbsp;&nbsp;Statistics
+                    </Typography>
+                </Grid>
+              </Grid>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container spacing={3}>

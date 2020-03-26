@@ -8,14 +8,16 @@ export default class GlobalMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.googleMapLibraries = ['visualization']
+    this.googleMapLibraries = ['visualization'];
     this.state = {
       isReady: false,
       markers: [],
       GoogleLatLngFn: null,
       map: null,
       currentLat: 51.3360,
-      currentLong: 0.2674
+      currentLong: 0.2674,
+      vertical: 'top',
+      horizontal: 'center',
     }
   }
 
@@ -53,6 +55,10 @@ export default class GlobalMap extends React.Component {
     }
   }
 
+  onSnackbarClose(event, reason) {
+    console.log('Snackbar closed.');
+  }
+
   onLoad() {
     console.log('GM onLoad');
   }
@@ -63,8 +69,6 @@ export default class GlobalMap extends React.Component {
 
   onDragEnd() {
     console.log('Drag end.');
-    // this.state.currentLat = this.state.map.getCenter().lat();
-    // this.state.currentLong = this.state.map.getCenter().lng();
   }
 
   render() {
@@ -84,6 +88,12 @@ export default class GlobalMap extends React.Component {
           googleMapsApiKey="AIzaSyDW_dP3NjuXPjvBs0AXKOL2BuQ4susF3KU"
           libraries={this.googleMapLibraries}>
             <GoogleMap
+              options={{
+                maxZoom: 10,
+                streetViewControl: false,
+                fullscreenControl: false,
+                mapTypeId: 'satellite'
+              }}
               onDragEnd={this.onDragEnd.bind(this)}
               onLoad={map => {
                 this.setState({
