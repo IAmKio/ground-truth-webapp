@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
+  link: {
+    fontWeight: 'bold',
+    color: 'black'
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -41,7 +45,7 @@ export default function HudInformation() {
         <Grid item xs>
           <Paper className={classes.paper}>
             <Typography variant="subtitle1" component="p">
-              Ground Truth gives everyone the opportunity to report their symptoms anonymously for the benefit of others.
+              Ground Truth gives everyone the opportunity to report their symptoms anonymously for the benefit of others. Our mission is to map the movement of infection and disease across the world.
             </Typography>
           </Paper>
         </Grid>
@@ -51,7 +55,7 @@ export default function HudInformation() {
           <Paper className={classes.paper}>
             <DataUsageIcon />
             <Typography variant="subtitle1" component="p">
-              <a rel="noopener noreferrer" href="https://github.com/IAmKio/ground-truth-api#where-can-i-get-the-data" target="_blank">Data</a>
+              <a className={classes.link} rel="noopener noreferrer" href="https://github.com/IAmKio/ground-truth-api#where-can-i-get-the-data" target="_blank">Data</a>
             </Typography>
             <Hidden xsDown>
               <Typography variant="subtitle2" component="p">
@@ -64,7 +68,7 @@ export default function HudInformation() {
           <Paper className={classes.paper}>
             <CodeIcon />
             <Typography variant="subtitle1" component="p">
-              <a rel="noopener noreferrer" href="https://github.com/IAmKio/ground-truth-webapp" target="_blank">Open</a>
+              <a className={classes.link} rel="noopener noreferrer" href="https://github.com/IAmKio/ground-truth-webapp" target="_blank">Open</a>
             </Typography>
             <Hidden xsDown>
               <Typography variant="subtitle2" component="p">
@@ -77,7 +81,7 @@ export default function HudInformation() {
           <Paper className={classes.paper}>
             <FavoriteIcon />
             <Typography variant="subtitle1" component="p">
-              <a href="#about" onClick={handleOpen}>About</a>
+              <a className={classes.link} href="#about" onClick={handleOpen}>About</a>
             </Typography>
             <Hidden xsDown>
               <Typography variant="subtitle2" component="p">

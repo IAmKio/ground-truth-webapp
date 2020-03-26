@@ -1,6 +1,9 @@
 # Ground Truth Web App
 This is the home of the Ground Truth Web App.
 
+## Mission
+**Ground Truth gives everyone the opportunity to report their symptoms anonymously for the benefit of others. Our mission is to map the movement of infection and disease across the world, and provide unrestricted access to this data.**
+
 ## What is Ground Truth?
 Ground Truth is a suite of apps and services that aim to crowd-source symptom data for the benefit of others. The data captured is free for anyone to read and use in their research or systems. Ground Truth is a data tool, and is not interested in capturing any possibly personally identifying information.
 
