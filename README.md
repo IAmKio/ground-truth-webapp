@@ -7,6 +7,15 @@ This is the home of the Ground Truth Web App.
 ## What is Ground Truth?
 Ground Truth is a suite of apps and services that aim to crowd-source symptom data for the benefit of others. The data captured is free for anyone to read and use in their research or systems. Ground Truth is a data tool, and is not interested in capturing any possibly personally identifying information.
 
+## What could Ground Truth be used for?
+Here's just a few ideas:
+
+🌍 Using computer programming or AI / ML models to map the movement of symptoms across the globe
+
+🚨 Using the platform as an early warning system in developing countries
+
+🚑 Essential supplies / logistical planning by using the system to find out where the most help might be needed
+
 ## Where can i get the data?
 Head on over to the [Ground Truth API](https://github.com/IAmKio/ground-truth-api) project to find the latest list of API endpoints available.
 
