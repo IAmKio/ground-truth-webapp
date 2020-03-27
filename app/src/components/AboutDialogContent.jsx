@@ -46,7 +46,7 @@ export default function AboutDialogContent() {
       >
         All our data is free and public. It&apos;s available for anyone
         to use, any time. You can view links to the data
-        <a href="https://github.com/IAmKio/ground-truth-api#where-can-i-get-the-data" rel="noopener noreferrer" target="_blank">here</a>
+        <a href="https://github.com/IAmKio/ground-truth-api#where-can-i-get-the-data" rel="noopener noreferrer" target="_blank"> here</a>
         .
       </DialogContentText>
     </>

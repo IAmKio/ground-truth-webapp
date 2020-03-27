@@ -163,9 +163,7 @@ export default class HudDrawer extends React.Component {
                     <Grid key={rand} item xs={12}>
                       <Typography>
                         <b>
-                          {statistic.name}
-                          :
-                          {statistic.count}
+                          {`${statistic.name}: ${statistic.count}`}
                         </b>
                         <br />
                         {statistic.description}
